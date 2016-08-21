@@ -1,33 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This Program is written so that expensive functions can do their operations faster. This program implements the inverse function
+## Accordingly the calculated inverse isstored in cache for the next implementation. 
 
-## Write a short comment describing this function
+## This function returns a list of functions that will be used the next function to calculte the inverse and extract the cached data 
+##if applicable fast
 
 makeCacheMatrix <- function(x = matrix()) {
-  m<-matrix()
+  cache<-matrix()
   set<-function(y){
     x<<-y
-    m<<-matrix()
+    cache<<-matrix()
   }
   get<-function() x
-  setinv<-function(inv) m<<-inv
-  getinv<-function() m
+  setinv<-function(inv) cache<<-inv
+  getinv<-function() cache
   list(set=set,get=get,setinv=setinv,getinv=getinv)
 }
 
 
-## Write a short comment describing this function
+##This function is used to extract cached data for the particular value if it is available. Otherwise it will continue and execute 
+##the inverse function
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-  m<-x$getinv()
-  if(!is.na(m))
+  cache<-x$getinv()
+  if(!is.na(cache))
   {
     message("getting cached data")
-    return(m)
+    return(cache)
   }
   data<-x$get()
-  m<-solve(data,...)
-  x$setinv(m)
+  cache<-solve(data,...)
+  x$setinv(cache)
   m
 }
